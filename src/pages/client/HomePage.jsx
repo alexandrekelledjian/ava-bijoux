@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
 import { ArrowRight, Sparkles, Heart, Gift, Truck } from 'lucide-react'
-import { products, categories } from '../../data/products'
-
+import { useStore } from '../../store/useStore'
 // Étoile décorative (basée sur la charte graphique)
 function StarIcon({ className = 'w-4 h-4' }) {
   return (
@@ -14,6 +13,10 @@ function StarIcon({ className = 'w-4 h-4' }) {
 
 export default function HomePage() {
   const { getSalonParam } = useOutletContext()
+
+    // Utiliser les produits du store global
+    const { products } = useStore()
+    const activeProducts = products.filter(p => p.active)
 
   return (
     <div>

@@ -32,7 +32,7 @@ export default function SalonCommissions() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-serif font-semibold text-ava-700">
+        <h1 className="text-2xl font-serif font-semibold text-ava-800">
           Mes commissions
         </h1>
         <p className="text-gray-600">
@@ -95,7 +95,7 @@ export default function SalonCommissions() {
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Pending Commissions */}
         <div>
-          <h2 className="font-semibold text-ava-700 text-lg mb-4">
+          <h2 className="font-semibold text-ava-800 text-lg mb-4">
             Commissions en attente de validation
           </h2>
           <div className="card overflow-hidden">
@@ -140,7 +140,7 @@ export default function SalonCommissions() {
 
         {/* Payment History */}
         <div>
-          <h2 className="font-semibold text-ava-700 text-lg mb-4">
+          <h2 className="font-semibold text-ava-800 text-lg mb-4">
             Historique des virements
           </h2>
           <div className="card overflow-hidden">
@@ -181,7 +181,7 @@ export default function SalonCommissions() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-ava-700">
+              <h2 className="text-xl font-semibold text-ava-800">
                 Demander un virement
               </h2>
             </div>

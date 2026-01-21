@@ -8,24 +8,21 @@ export default {
     extend: {
       colors: {
         'ava': {
-          // Gris anthracite (couleur principale du logo)
-          50: '#f7f7f7',
-          100: '#ededed',
-          200: '#d4d4d4',
-          300: '#b0b0b0',
-          400: '#888888',
-          500: '#6b6b6b',
-          600: '#555555',
-          700: '#4a4a4a', // Couleur principale du logo
-          800: '#3d3d3d',
-          900: '#2d2d2d',
-          // Or/Beige (étoile du logo)
-          gold: '#e8c88b',
-          'gold-light': '#f5e6c8',
-          'gold-dark': '#d4b574',
-          // Couleurs secondaires
-          cream: '#faf9f7',
-          'cream-dark': '#f5f3ef',
+          50: '#fdf8f6',
+          100: '#f9ebe5',
+          200: '#f4d4c8',
+          300: '#e9b8a3',
+          400: '#db9477',
+          500: '#cc7655',
+          600: '#b85d3f',
+          700: '#9a4a33',
+          800: '#7d3e2d',
+          900: '#663628',
+          gold: '#d4af37',
+          'gold-light': '#f4e4bc',
+          'gold-dark': '#b8962e',
+          rose: '#e8c4c4',
+          cream: '#faf7f5',
         }
       },
       fontFamily: {

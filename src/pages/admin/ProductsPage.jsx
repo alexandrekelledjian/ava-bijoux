@@ -1,66 +1,21 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Plus,
   Search,
   Edit2,
   Trash2,
-  Image,
   Upload,
   X,
   Save,
   Eye,
   EyeOff,
-  GripVertical,
   Gem,
-  Star
+  Star,
+  Loader2,
+  AlertCircle,
+  RefreshCw
 } from 'lucide-react'
 import { useStore } from '../../store/useStore'
-
-// Mock initial products data
-const initialProducts = [
-  {
-    id: 1,
-    name: 'Collier Étoile',
-    category: 'collier',
-    basePrice: 35,
-    description: 'Un magnifique collier avec pendentif étoile personnalisable',
-    images: ['/images/products/collier-etoile-1.jpg'],
-    materials: ['Acier inoxydable', 'Plaqué or'],
-    customizable: true,
-    maxChars: 15,
-    active: true,
-    stock: 100,
-    createdAt: '2025-01-10'
-  },
-  {
-    id: 2,
-    name: 'Bracelet Infini',
-    category: 'bracelet',
-    basePrice: 28,
-    description: 'Bracelet élégant avec symbole infini et gravure personnalisée',
-    images: ['/images/products/bracelet-infini-1.jpg'],
-    materials: ['Acier inoxydable', 'Or rose'],
-    customizable: true,
-    maxChars: 10,
-    active: true,
-    stock: 75,
-    createdAt: '2025-01-12'
-  },
-  {
-    id: 3,
-    name: 'Pendentif Cœur',
-    category: 'collier',
-    basePrice: 42,
-    description: 'Pendentif en forme de cœur avec gravure laser',
-    images: ['/images/products/pendentif-coeur-1.jpg'],
-    materials: ['Acier inoxydable', 'Plaqué or'],
-    customizable: true,
-    maxChars: 12,
-    active: false,
-    stock: 0,
-    createdAt: '2025-01-15'
-  }
-]
 
 const categories = [
   { value: 'collier', label: 'Collier' },
@@ -78,12 +33,27 @@ const materials = [
 ]
 
 export default function ProductsPage() {
-  const { products, addProduct, updateProduct, deleteProduct, toggleProductStatus } = useStore()
+  // Utiliser le store global
+  const {
+    products,
+    productsLoading,
+    productsError,
+    fetchProducts,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    toggleProductStatus
+  } = useStore()
+
   const [searchTerm, setSearchTerm] = useState('')
   const [filterCategory, setFilterCategory] = useState('all')
   const [showModal, setShowModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
   const [deleteConfirm, setDeleteConfirm] = useState(null)
+  const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [togglingStatus, setTogglingStatus] = useState(null)
+  const [error, setError] = useState(null)
   const fileInputRef = useRef(null)
 
   // Form state
@@ -101,10 +71,17 @@ export default function ProductsPage() {
   })
   const [previewImages, setPreviewImages] = useState([])
 
+  // Fetch products on mount
+  useEffect(() => {
+    fetchProducts().catch(err => {
+      console.error('Failed to fetch products:', err)
+    })
+  }, [fetchProducts])
+
   // Filter products
   const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesSearch = product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description?.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesCategory = filterCategory === 'all' || product.category === filterCategory
     return matchesSearch && matchesCategory
   })
@@ -112,6 +89,7 @@ export default function ProductsPage() {
   // Open modal for new product
   const handleAddProduct = () => {
     setEditingProduct(null)
+    setError(null)
     setFormData({
       name: '',
       category: 'collier',
@@ -131,19 +109,20 @@ export default function ProductsPage() {
   // Open modal for editing
   const handleEditProduct = (product) => {
     setEditingProduct(product)
+    setError(null)
     setFormData({
       name: product.name,
       category: product.category,
-      basePrice: product.basePrice.toString(),
-      description: product.description,
-      images: product.images,
-      materials: product.materials,
-      customizable: product.customizable,
-      maxChars: product.maxChars,
-      active: product.active,
-      stock: product.stock
+      basePrice: product.basePrice?.toString() || '',
+      description: product.description || '',
+      images: product.images || [],
+      materials: product.materials || ['Acier inoxydable'],
+      customizable: product.customizable !== false,
+      maxChars: product.maxChars || 15,
+      active: product.active !== false,
+      stock: product.stock || 0
     })
-    setPreviewImages(product.images)
+    setPreviewImages(product.images || [])
     setShowModal(true)
   }
 
@@ -184,42 +163,95 @@ export default function ProductsPage() {
   }
 
   // Save product
-  const handleSaveProduct = () => {
+  const handleSaveProduct = async () => {
     if (!formData.name || !formData.basePrice) {
-      alert('Veuillez remplir tous les champs obligatoires')
+      setError('Veuillez remplir tous les champs obligatoires')
       return
     }
 
-    const productData = {
-      ...formData,
-      basePrice: parseFloat(formData.basePrice),
-      stock: parseInt(formData.stock) || 0
-    }
+    setSaving(true)
+    setError(null)
 
-    if (editingProduct) {
-      // Update existing product
-      setProducts(prev => prev.map(p =>
-        p.id === editingProduct.id ? { ...p, ...productData } : p
-      ))
-    } else {
-      // Add new product
-      const newProduct = {
-        ...productData,
-        id: Date.now(),
-        createdAt: new Date().toISOString().split('T')[0]
+    try {
+      const productData = {
+        ...formData,
+        basePrice: parseFloat(formData.basePrice),
+        stock: parseInt(formData.stock) || 0
       }
-      setProducts(prev => [...prev, newProduct])
-    }
 
-    setShowModal(false)
+      if (editingProduct) {
+        await updateProduct(editingProduct.id, productData)
+      } else {
+        await addProduct(productData)
+      }
+
+      setShowModal(false)
+    } catch (err) {
+      console.error('Error saving product:', err)
+      setError(err.message || 'Une erreur est survenue lors de l\'enregistrement')
+    } finally {
+      setSaving(false)
+    }
   }
 
   // Delete product
-  const handleDeleteProduct = (id) => {
-    setProducts(prev => prev.filter(p => p.id !== id))
-    setDeleteConfirm(null)
+  const handleDeleteProduct = async (id) => {
+    setDeleting(true)
+    try {
+      await deleteProduct(id)
+      setDeleteConfirm(null)
+    } catch (err) {
+      console.error('Error deleting product:', err)
+      alert('Erreur lors de la suppression: ' + err.message)
+    } finally {
+      setDeleting(false)
+    }
   }
 
+  // Toggle product active status
+  const handleToggleStatus = async (id) => {
+    setTogglingStatus(id)
+    try {
+      await toggleProductStatus(id)
+    } catch (err) {
+      console.error('Error toggling status:', err)
+      alert('Erreur lors du changement de statut: ' + err.message)
+    } finally {
+      setTogglingStatus(null)
+    }
+  }
+
+  // Loading state
+  if (productsLoading && products.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 text-ava-gold animate-spin mx-auto mb-4" />
+          <p className="text-gray-500">Chargement des produits...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Error state
+  if (productsError && products.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <p className="text-gray-700 font-medium mb-2">Erreur de chargement</p>
+          <p className="text-gray-500 mb-4">{productsError}</p>
+          <button
+            onClick={() => fetchProducts()}
+            className="btn-gold flex items-center gap-2 mx-auto"
+          >
+            <RefreshCw size={18} />
+            Réessayer
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -315,6 +347,13 @@ export default function ProductsPage() {
               <option key={cat.value} value={cat.value}>{cat.label}</option>
             ))}
           </select>
+          <button
+            onClick={() => fetchProducts()}
+            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            title="Rafraîchir"
+          >
+            <RefreshCw size={20} className={productsLoading ? 'animate-spin' : ''} />
+          </button>
         </div>
       </div>
 
@@ -329,22 +368,17 @@ export default function ProductsPage() {
           >
             {/* Product Image */}
             <div className="relative aspect-square bg-gray-100">
-              {product.images.length > 0 ? (
+              {product.images && product.images.length > 0 ? (
                 <img
                   src={product.images[0]}
                   alt={product.name}
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.style.display = 'none'
-                    e.target.nextSibling.style.display = 'flex'
-                  }}
                 />
-              ) : null}
-              <div
-                className={`absolute inset-0 flex items-center justify-center ${product.images.length > 0 ? 'hidden' : ''}`}
-              >
-                <Gem className="w-16 h-16 text-gray-300" />
-              </div>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Gem className="w-16 h-16 text-gray-300" />
+                </div>
+              )}
 
               {/* Status badge */}
               <div className="absolute top-3 left-3">
@@ -377,7 +411,7 @@ export default function ProductsPage() {
               </p>
 
               <div className="flex flex-wrap gap-1 mb-3">
-                {product.materials.map(mat => (
+                {product.materials?.map(mat => (
                   <span
                     key={mat}
                     className="px-2 py-0.5 bg-gray-100 rounded text-xs text-gray-600"
@@ -400,14 +434,19 @@ export default function ProductsPage() {
               {/* Actions */}
               <div className="flex gap-2">
                 <button
-                  onClick={() => toggleProductStatus(product.id)}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  onClick={() => handleToggleStatus(product.id)}
+                  disabled={togglingStatus === product.id}
+                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${
                     product.active
                       ? 'bg-orange-100 text-orange-700 hover:bg-orange-200'
                       : 'bg-green-100 text-green-700 hover:bg-green-200'
                   }`}
                 >
-                  {product.active ? 'Masquer' : 'Activer'}
+                  {togglingStatus === product.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin mx-auto" />
+                  ) : (
+                    product.active ? 'Masquer' : 'Activer'
+                  )}
                 </button>
                 <button
                   onClick={() => handleEditProduct(product)}
@@ -427,7 +466,7 @@ export default function ProductsPage() {
         ))}
       </div>
 
-      {filteredProducts.length === 0 && (
+      {filteredProducts.length === 0 && !productsLoading && (
         <div className="text-center py-12 bg-white rounded-xl border border-gray-100">
           <Gem className="w-12 h-12 text-gray-300 mx-auto mb-4" />
           <p className="text-gray-500">Aucun produit trouvé</p>
@@ -456,6 +495,14 @@ export default function ProductsPage() {
                 <X size={20} />
               </button>
             </div>
+
+            {/* Error message */}
+            {error && (
+              <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
+                <AlertCircle size={18} />
+                <span>{error}</span>
+              </div>
+            )}
 
             {/* Modal Body */}
             <div className="p-6 space-y-6">
@@ -655,16 +702,27 @@ export default function ProductsPage() {
             <div className="sticky bottom-0 bg-white border-t border-gray-100 px-6 py-4 flex justify-end gap-3">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-6 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                disabled={saving}
+                className="px-6 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
               >
                 Annuler
               </button>
               <button
                 onClick={handleSaveProduct}
-                className="btn-gold flex items-center gap-2"
+                disabled={saving}
+                className="btn-gold flex items-center gap-2 disabled:opacity-50"
               >
-                <Save size={18} />
-                {editingProduct ? 'Enregistrer' : 'Créer le produit'}
+                {saving ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Enregistrement...
+                  </>
+                ) : (
+                  <>
+                    <Save size={18} />
+                    {editingProduct ? 'Enregistrer' : 'Créer le produit'}
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -688,15 +746,24 @@ export default function ProductsPage() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeleteConfirm(null)}
-                  className="flex-1 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  disabled={deleting}
+                  className="flex-1 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
                 >
                   Annuler
                 </button>
                 <button
                   onClick={() => handleDeleteProduct(deleteConfirm)}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  disabled={deleting}
+                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  Supprimer
+                  {deleting ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Suppression...
+                    </>
+                  ) : (
+                    'Supprimer'
+                  )}
                 </button>
               </div>
             </div>

@@ -8,25 +8,21 @@
   }
 
   body {
-    @apply bg-ava-cream text-ava-700 font-sans antialiased;
+    @apply bg-ava-cream text-gray-800 font-sans antialiased;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-ava-700 hover:bg-ava-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg;
+    @apply bg-ava-gold hover:bg-ava-gold-dark text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg;
   }
 
   .btn-secondary {
-    @apply bg-white hover:bg-ava-50 text-ava-700 font-medium py-3 px-6 rounded-lg border-2 border-ava-700 transition-all duration-300;
+    @apply bg-white hover:bg-gray-50 text-ava-800 font-medium py-3 px-6 rounded-lg border-2 border-ava-gold transition-all duration-300;
   }
 
   .btn-outline {
-    @apply bg-transparent hover:bg-ava-gold/10 text-ava-700 font-medium py-2 px-4 rounded-lg border border-ava-700 transition-all duration-300;
-  }
-
-  .btn-gold {
-    @apply bg-ava-gold hover:bg-ava-gold-dark text-ava-700 font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg;
+    @apply bg-transparent hover:bg-ava-gold/10 text-ava-gold font-medium py-2 px-4 rounded-lg border border-ava-gold transition-all duration-300;
   }
 
   .card {
@@ -34,25 +30,25 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-ava-200 focus:border-ava-gold focus:ring-2 focus:ring-ava-gold/20 outline-none transition-all duration-200;
+    @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-ava-gold focus:ring-2 focus:ring-ava-gold/20 outline-none transition-all duration-200;
   }
 
   .label {
-    @apply block text-sm font-medium text-ava-600 mb-1;
+    @apply block text-sm font-medium text-gray-700 mb-1;
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-serif font-semibold text-ava-700;
+    @apply text-3xl md:text-4xl font-serif font-semibold text-ava-800;
   }
 
   .gradient-gold {
-    @apply bg-gradient-to-r from-ava-gold-dark via-ava-gold to-ava-gold-light;
+    @apply bg-gradient-to-r from-ava-gold via-yellow-400 to-ava-gold;
   }
 }
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-ava-gold-dark to-ava-gold;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-ava-gold to-ava-600;
   }
 
   .animate-float {
@@ -72,15 +68,6 @@
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
   }
-
-  /* Style pour le logo ava */
-  .logo-ava {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    color: #4a4a4a;
-  }
 }
 
 /* Custom scrollbar */
@@ -93,9 +80,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-ava-300 rounded-full;
+  @apply bg-ava-gold/50 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-ava-400;
+  @apply bg-ava-gold;
 }

@@ -71,7 +71,7 @@ export default function AdminCommissions() {
     <div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-serif font-semibold text-ava-700">
+          <h1 className="text-2xl font-serif font-semibold text-ava-800">
             Gestion des commissions
           </h1>
           <p className="text-gray-600">
@@ -226,7 +226,7 @@ export default function AdminCommissions() {
 
       {/* Payout History */}
       <div>
-        <h2 className="font-semibold text-ava-700 text-lg mb-4">
+        <h2 className="font-semibold text-ava-800 text-lg mb-4">
           Historique des virements
         </h2>
         <div className="card overflow-hidden">
@@ -289,7 +289,7 @@ function PayoutModal({ salon, onClose }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
         <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-ava-700">
+          <h2 className="text-xl font-semibold text-ava-800">
             Effectuer le virement
           </h2>
         </div>

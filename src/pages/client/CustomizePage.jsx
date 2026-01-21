@@ -97,7 +97,7 @@ export default function CustomizePage() {
           </Suspense>
 
           {/* Preview badge */}
-          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-medium text-ava-700 shadow-sm">
+          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-medium text-ava-800 shadow-sm">
             ✨ Prévisualisation 3D
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function CustomizePage() {
         {/* Customization Panel */}
         <div>
           <div className="mb-6">
-            <h1 className="text-3xl font-serif font-semibold text-ava-700 mb-2">
+            <h1 className="text-3xl font-serif font-semibold text-ava-800 mb-2">
               {product.name}
             </h1>
             <p className="text-gray-600 mb-4">{product.description}</p>
@@ -197,7 +197,7 @@ export default function CustomizePage() {
 
           {/* Summary */}
           <div className="bg-ava-50 rounded-xl p-5 mb-6">
-            <h3 className="font-semibold text-ava-700 mb-3">Récapitulatif</h3>
+            <h3 className="font-semibold text-ava-800 mb-3">Récapitulatif</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Bijou</span>
@@ -222,7 +222,7 @@ export default function CustomizePage() {
                 </span>
               </div>
               <div className="border-t border-ava-200 pt-2 mt-2 flex justify-between">
-                <span className="font-semibold text-ava-700">Total</span>
+                <span className="font-semibold text-ava-800">Total</span>
                 <span className="font-semibold text-ava-gold text-lg">
                   {product.price.toFixed(2)} €
                 </span>

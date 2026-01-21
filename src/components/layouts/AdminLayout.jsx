@@ -11,18 +11,9 @@ import {
   Settings,
   Package,
   Gem,
-  ImagePlus
+  Users
 } from 'lucide-react'
 import { useStore } from '../../store/useStore'
-
-// Star icon matching brand guidelines
-function StarIcon({ className = 'w-3 h-3', color = '#e8c88b' }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill={color}>
-      <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" />
-    </svg>
-  )
-}
 
 export default function AdminLayout() {
   const navigate = useNavigate()
@@ -58,18 +49,20 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-ava-700 text-white transform transition-transform lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-ava-800 text-white transform transition-transform lg:relative lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="p-6 border-b border-ava-600/30">
+          <div className="p-6 border-b border-ava-700">
             <Link to="/admin/dashboard" className="flex items-center gap-3">
-              <StarIcon className="w-8 h-8" />
+              <div className="w-10 h-10 rounded-full gradient-gold flex items-center justify-center">
+                <span className="text-white font-serif text-xl font-bold">A</span>
+              </div>
               <div>
-                <span className="text-2xl font-serif tracking-wide">ava</span>
-                <span className="text-xs text-ava-gold block tracking-widest uppercase">Administration</span>
+                <span className="text-xl font-serif font-semibold">Ava</span>
+                <span className="text-xs text-ava-300 block">Administration</span>
               </div>
             </Link>
           </div>
@@ -94,21 +87,21 @@ export default function AdminLayout() {
           </nav>
 
           {/* User Section */}
-          <div className="p-4 border-t border-ava-600/30">
+          <div className="p-4 border-t border-ava-700">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-ava-gold/20 border border-ava-gold/40 flex items-center justify-center">
-                <span className="font-semibold text-ava-gold">
+              <div className="w-10 h-10 rounded-full bg-ava-600 flex items-center justify-center">
+                <span className="font-semibold">
                   {adminAuth.name?.charAt(0).toUpperCase() || 'A'}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-medium truncate">{adminAuth.name}</p>
-                <p className="text-xs text-gray-400 truncate">{adminAuth.email}</p>
+                <p className="text-xs text-ava-300 truncate">{adminAuth.email}</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white hover:bg-ava-600/50 rounded-lg transition-colors"
+              className="w-full flex items-center gap-2 px-4 py-2 text-ava-300 hover:text-white hover:bg-ava-700 rounded-lg transition-colors"
             >
               <LogOut size={18} />
               Déconnexion

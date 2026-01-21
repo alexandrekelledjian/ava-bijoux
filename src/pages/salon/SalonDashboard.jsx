@@ -34,7 +34,7 @@ export default function SalonDashboard() {
     <div>
       {/* Welcome Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-serif font-semibold text-ava-700">
+        <h1 className="text-2xl font-serif font-semibold text-ava-800">
           Bonjour, {salonAuth?.name} 👋
         </h1>
         <p className="text-gray-600 mt-1">
@@ -46,7 +46,7 @@ export default function SalonDashboard() {
       <div className="card p-4 mb-8 bg-gradient-to-r from-ava-gold/10 to-ava-100">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <p className="font-medium text-ava-700">🔗 Votre lien boutique personnalisé</p>
+            <p className="font-medium text-ava-800">🔗 Votre lien boutique personnalisé</p>
             <p className="text-sm text-gray-600 mt-1">
               Partagez ce lien avec vos clients pour recevoir 30% de commission
             </p>
@@ -106,7 +106,7 @@ export default function SalonDashboard() {
         {/* Recent Orders */}
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-ava-700 text-lg">
+            <h2 className="font-semibold text-ava-800 text-lg">
               Commandes récentes
             </h2>
             <Link
@@ -153,7 +153,7 @@ export default function SalonDashboard() {
 
         {/* Quick Actions */}
         <div>
-          <h2 className="font-semibold text-ava-700 text-lg mb-4">
+          <h2 className="font-semibold text-ava-800 text-lg mb-4">
             Actions rapides
           </h2>
 
@@ -197,7 +197,7 @@ export default function SalonDashboard() {
 
           {/* Commission Info */}
           <div className="mt-6 p-4 bg-ava-50 rounded-xl">
-            <h3 className="font-medium text-ava-700 mb-2">💰 Comment ça marche ?</h3>
+            <h3 className="font-medium text-ava-800 mb-2">💰 Comment ça marche ?</h3>
             <ul className="text-sm text-gray-600 space-y-2">
               <li>• Partagez votre lien avec vos clients</li>
               <li>• Recevez 30% sur chaque vente</li>

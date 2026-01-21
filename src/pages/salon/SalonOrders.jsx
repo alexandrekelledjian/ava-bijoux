@@ -74,7 +74,7 @@ export default function SalonOrders() {
     <div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-serif font-semibold text-ava-700">
+          <h1 className="text-2xl font-serif font-semibold text-ava-800">
             Commandes
           </h1>
           <p className="text-gray-600">
@@ -234,7 +234,7 @@ function OrderDetailModal({ order, onClose }) {
       <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-ava-700">
+            <h2 className="text-xl font-semibold text-ava-800">
               Commande {order.id}
             </h2>
             <button

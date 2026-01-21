@@ -19,7 +19,7 @@ export default function OrderConfirmation() {
         <CheckCircle size={48} className="text-green-600" />
       </div>
 
-      <h1 className="text-3xl font-serif font-semibold text-ava-700 mb-4">
+      <h1 className="text-3xl font-serif font-semibold text-ava-800 mb-4">
         Merci pour votre commande !
       </h1>
 
@@ -28,14 +28,14 @@ export default function OrderConfirmation() {
       </p>
 
       {order.total > 0 && (
-        <p className="text-lg font-semibold text-ava-700 mb-8">
+        <p className="text-lg font-semibold text-ava-800 mb-8">
           Total payé : {order.total.toFixed(2)} €
         </p>
       )}
 
       {/* Order Status Steps */}
       <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 text-left">
-        <h2 className="font-semibold text-ava-700 mb-6 text-center">
+        <h2 className="font-semibold text-ava-800 mb-6 text-center">
           Prochaines étapes
         </h2>
 
@@ -96,7 +96,7 @@ export default function OrderConfirmation() {
 
       {/* Commission Note */}
       {order.salon && (
-        <div className="bg-ava-50 rounded-xl p-4 mb-8 text-sm text-ava-700">
+        <div className="bg-ava-50 rounded-xl p-4 mb-8 text-sm text-ava-800">
           <p>
             ✨ Cette commande a été effectuée via <strong>{order.salon.name}</strong>.
             <br />

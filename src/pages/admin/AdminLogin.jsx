@@ -45,7 +45,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-ava-700 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-ava-800 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -64,7 +64,7 @@ export default function AdminLogin() {
 
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-2xl p-8">
-          <div className="flex items-center gap-2 mb-6 text-ava-700">
+          <div className="flex items-center gap-2 mb-6 text-ava-800">
             <Shield size={20} />
             <span className="font-medium">Connexion sécurisée</span>
           </div>

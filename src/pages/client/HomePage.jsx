@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
-import { ArrowRight, Sparkles, Heart, Gift, Truck } from 'lucide-react'
+import { ArrowRight, Sparkles, Heart, Gift, Truck, Gem, Loader2, RefreshCw } from 'lucide-react'
 import { useStore } from '../../store/useStore'
-import { categories } from '../../data/products'
+
 // Étoile décorative (basée sur la charte graphique)
 function StarIcon({ className = 'w-4 h-4' }) {
   return (
@@ -12,12 +12,38 @@ function StarIcon({ className = 'w-4 h-4' }) {
   )
 }
 
+// Catégories pour l'affichage
+const categoryInfo = {
+  collier: { name: 'Colliers', icon: '💎' },
+  bracelet: { name: 'Bracelets', icon: '✨' },
+  pendentif: { name: 'Pendentifs', icon: '❤️' },
+  bague: { name: 'Bagues', icon: '💍' }
+}
+
 export default function HomePage() {
   const { getSalonParam } = useOutletContext()
 
-    // Utiliser les produits du store global
-    const { products } = useStore()
-    const activeProducts = products.filter(p => p.active)
+  // Utiliser les produits du store global
+  const { products, productsLoading, productsError, fetchActiveProducts } = useStore()
+
+  // Charger les produits actifs au montage
+  useEffect(() => {
+    fetchActiveProducts().catch(err => {
+      console.error('Failed to fetch products:', err)
+    })
+  }, [fetchActiveProducts])
+
+  // Filtrer les produits actifs (double vérification)
+  const activeProducts = products.filter(p => p.active)
+
+  // Grouper les produits par catégorie
+  const productsByCategory = activeProducts.reduce((acc, product) => {
+    if (!acc[product.category]) {
+      acc[product.category] = []
+    }
+    acc[product.category].push(product)
+    return acc
+  }, {})
 
   return (
     <div>
@@ -127,22 +153,54 @@ export default function HomePage() {
             Des bijoux en acier inoxydable prêts à être personnalisés
           </p>
 
-          {categories.map((category) => (
-            <div key={category.id} id={category.id} className="mb-16">
-              <h3 className="text-2xl font-serif font-medium text-ava-700 mb-8 flex items-center gap-3">
-                <span>{category.icon}</span>
-                {category.name}
-              </h3>
+          {/* Loading state */}
+          {productsLoading && activeProducts.length === 0 && (
+            <div className="text-center py-12 bg-ava-50 rounded-2xl">
+              <Loader2 className="w-12 h-12 text-ava-gold mx-auto mb-4 animate-spin" />
+              <p className="text-ava-500">Chargement de la collection...</p>
+            </div>
+          )}
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products
-                  .filter((p) => p.category === category.id)
-                  .map((product) => (
+          {/* Error state */}
+          {productsError && activeProducts.length === 0 && (
+            <div className="text-center py-12 bg-red-50 rounded-2xl">
+              <Gem className="w-16 h-16 text-red-300 mx-auto mb-4" />
+              <p className="text-red-600 mb-4">Erreur de chargement</p>
+              <button
+                onClick={() => fetchActiveProducts()}
+                className="btn-secondary inline-flex items-center gap-2"
+              >
+                <RefreshCw size={18} />
+                Réessayer
+              </button>
+            </div>
+          )}
+
+          {/* Empty state */}
+          {!productsLoading && !productsError && activeProducts.length === 0 && (
+            <div className="text-center py-12 bg-ava-50 rounded-2xl">
+              <Gem className="w-16 h-16 text-ava-300 mx-auto mb-4" />
+              <p className="text-ava-500">Aucun produit disponible pour le moment</p>
+            </div>
+          )}
+
+          {/* Products grid */}
+          {activeProducts.length > 0 && (
+            Object.entries(productsByCategory).map(([categoryId, categoryProducts]) => (
+              <div key={categoryId} id={categoryId} className="mb-16">
+                <h3 className="text-2xl font-serif font-medium text-ava-700 mb-8 flex items-center gap-3">
+                  <span>{categoryInfo[categoryId]?.icon || '💎'}</span>
+                  {categoryInfo[categoryId]?.name || categoryId}
+                </h3>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {categoryProducts.map((product) => (
                     <ProductCard key={product.id} product={product} getSalonParam={getSalonParam} />
                   ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </section>
 
@@ -172,14 +230,19 @@ export default function HomePage() {
 function ProductCard({ product, getSalonParam }) {
   return (
     <div className="card group">
-      {/* Product Image Placeholder */}
+      {/* Product Image */}
       <div className="aspect-square bg-gradient-to-br from-ava-50 to-ava-100 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div
-            className="w-32 h-32 rounded-full opacity-80"
-            style={{ backgroundColor: product.modelColor }}
-          ></div>
-        </div>
+        {product.images && product.images.length > 0 ? (
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Gem className="w-20 h-20 text-ava-300" />
+          </div>
+        )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
           <Link
             to={`/personnaliser/${product.id}${getSalonParam()}`}
@@ -196,11 +259,13 @@ function ProductCard({ product, getSalonParam }) {
         <p className="text-ava-500 text-sm mb-3 line-clamp-2">{product.description}</p>
         <div className="flex items-center justify-between">
           <span className="text-xl font-semibold text-ava-gold">
-            {product.price.toFixed(2)} €
+            {(product.basePrice || 0).toFixed(2)} €
           </span>
-          <span className="text-xs text-ava-400">
-            Max {product.maxChars} caractères
-          </span>
+          {product.customizable && (
+            <span className="text-xs text-ava-400">
+              Max {product.maxChars} caractères
+            </span>
+          )}
         </div>
       </div>
     </div>

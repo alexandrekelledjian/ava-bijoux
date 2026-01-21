@@ -53,7 +53,7 @@ export default function SalonLogin() {
               <span className="text-white font-serif text-3xl font-bold">A</span>
             </div>
           </Link>
-          <h1 className="text-2xl font-serif font-semibold text-ava-700 mt-4">
+          <h1 className="text-2xl font-serif font-semibold text-ava-800 mt-4">
             Espace Salon Partenaire
           </h1>
           <p className="text-gray-600 mt-2">

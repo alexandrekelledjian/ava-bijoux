@@ -95,7 +95,7 @@ export default function AdminOrders() {
     <div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-serif font-semibold text-ava-700">
+          <h1 className="text-2xl font-serif font-semibold text-ava-800">
             Gestion des commandes
           </h1>
           <p className="text-gray-600">
@@ -254,7 +254,7 @@ function OrderDetailModal({ order, onClose }) {
         <div className="p-6 border-b border-gray-200 sticky top-0 bg-white">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold text-ava-700">
+              <h2 className="text-xl font-semibold text-ava-800">
                 Commande {order.id}
               </h2>
               <p className="text-sm text-gray-500 mt-1">Passée le {order.date}</p>
@@ -304,7 +304,7 @@ function OrderDetailModal({ order, onClose }) {
             <div>
               <h3 className="text-sm font-medium text-gray-700 mb-2">Salon partenaire</h3>
               <div className="p-4 bg-ava-50 rounded-lg">
-                <p className="font-medium text-ava-700">{order.salon.name}</p>
+                <p className="font-medium text-ava-800">{order.salon.name}</p>
                 <p className="text-sm text-gray-600">ID: {order.salon.id}</p>
               </div>
             </div>

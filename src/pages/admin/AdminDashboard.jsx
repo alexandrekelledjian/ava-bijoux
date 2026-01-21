@@ -9,9 +9,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Users,
-  Package,
-  Gem,
-  Plus
+  Package
 } from 'lucide-react'
 
 // Mock data
@@ -43,22 +41,13 @@ const mockTopSalons = [
 export default function AdminDashboard() {
   return (
     <div>
-      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-serif font-semibold text-ava-700">
-            Tableau de bord
-          </h1>
-          <p className="text-gray-600">
-            Vue d'ensemble de l'activité Ava Bijoux
-          </p>
-        </div>
-        <Link
-          to="/admin/produits"
-          className="btn-gold flex items-center gap-2 self-start"
-        >
-          <Plus size={18} />
-          Ajouter un produit
-        </Link>
+      <div className="mb-8">
+        <h1 className="text-2xl font-serif font-semibold text-ava-800">
+          Tableau de bord
+        </h1>
+        <p className="text-gray-600">
+          Vue d'ensemble de l'activité Ava Bijoux
+        </p>
       </div>
 
       {/* Stats Grid */}
@@ -93,51 +82,11 @@ export default function AdminDashboard() {
         />
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid sm:grid-cols-3 gap-4 mb-8">
-        <Link
-          to="/admin/produits"
-          className="bg-white border border-gray-100 rounded-xl p-4 hover:border-ava-gold hover:shadow-md transition-all flex items-center gap-4"
-        >
-          <div className="p-3 bg-ava-gold/10 rounded-lg">
-            <Gem className="w-6 h-6 text-ava-gold" />
-          </div>
-          <div>
-            <p className="font-medium text-ava-700">Gérer les produits</p>
-            <p className="text-sm text-gray-500">Ajouter, modifier, supprimer</p>
-          </div>
-        </Link>
-        <Link
-          to="/admin/salons"
-          className="bg-white border border-gray-100 rounded-xl p-4 hover:border-ava-gold hover:shadow-md transition-all flex items-center gap-4"
-        >
-          <div className="p-3 bg-blue-100 rounded-lg">
-            <Store className="w-6 h-6 text-blue-600" />
-          </div>
-          <div>
-            <p className="font-medium text-ava-700">Salons partenaires</p>
-            <p className="text-sm text-gray-500">127 salons actifs</p>
-          </div>
-        </Link>
-        <Link
-          to="/admin/commissions"
-          className="bg-white border border-gray-100 rounded-xl p-4 hover:border-ava-gold hover:shadow-md transition-all flex items-center gap-4"
-        >
-          <div className="p-3 bg-amber-100 rounded-lg">
-            <Wallet className="w-6 h-6 text-amber-600" />
-          </div>
-          <div>
-            <p className="font-medium text-ava-700">Commissions</p>
-            <p className="text-sm text-gray-500">12 demandes en attente</p>
-          </div>
-        </Link>
-      </div>
-
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Recent Orders */}
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-ava-700 text-lg">
+            <h2 className="font-semibold text-ava-800 text-lg">
               Dernières commandes
             </h2>
             <Link
@@ -184,7 +133,7 @@ export default function AdminDashboard() {
         {/* Top Salons */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-ava-700 text-lg">
+            <h2 className="font-semibold text-ava-800 text-lg">
               Top Salons
             </h2>
             <Link

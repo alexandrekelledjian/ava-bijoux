@@ -101,7 +101,7 @@ export default function CheckoutPage() {
         Retour au panier
       </button>
 
-      <h1 className="text-3xl font-serif font-semibold text-ava-700 mb-8">
+      <h1 className="text-3xl font-serif font-semibold text-ava-800 mb-8">
         Finaliser ma commande
       </h1>
 
@@ -111,7 +111,7 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2 space-y-8">
             {/* Contact Information */}
             <div className="card p-6">
-              <h2 className="font-semibold text-ava-700 text-lg mb-4 flex items-center gap-2">
+              <h2 className="font-semibold text-ava-800 text-lg mb-4 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-full bg-ava-gold text-white flex items-center justify-center text-sm">1</span>
                 Vos coordonnées
               </h2>
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
             {/* Delivery Address */}
             {(needsAddress || needsRelayPoint) && (
               <div className="card p-6">
-                <h2 className="font-semibold text-ava-700 text-lg mb-4 flex items-center gap-2">
+                <h2 className="font-semibold text-ava-800 text-lg mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 rounded-full bg-ava-gold text-white flex items-center justify-center text-sm">2</span>
                   <Truck size={20} className="text-ava-gold" />
                   {needsAddress ? 'Adresse de livraison' : 'Point Relais'}
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
             {/* Salon Delivery Info */}
             {deliveryOption === 'salon' && currentSalon && (
               <div className="card p-6">
-                <h2 className="font-semibold text-ava-700 text-lg mb-4 flex items-center gap-2">
+                <h2 className="font-semibold text-ava-800 text-lg mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 rounded-full bg-ava-gold text-white flex items-center justify-center text-sm">2</span>
                   <MapPin size={20} className="text-ava-gold" />
                   Retrait en salon
@@ -258,7 +258,7 @@ export default function CheckoutPage() {
 
             {/* Payment */}
             <div className="card p-6">
-              <h2 className="font-semibold text-ava-700 text-lg mb-4 flex items-center gap-2">
+              <h2 className="font-semibold text-ava-800 text-lg mb-4 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-full bg-ava-gold text-white flex items-center justify-center text-sm">
                   {deliveryOption === 'salon' ? '3' : needsAddress || needsRelayPoint ? '3' : '2'}
                 </span>
@@ -301,7 +301,7 @@ export default function CheckoutPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="card p-6 sticky top-24">
-              <h2 className="font-semibold text-ava-700 text-lg mb-4">
+              <h2 className="font-semibold text-ava-800 text-lg mb-4">
                 Votre commande
               </h2>
 
@@ -328,7 +328,7 @@ export default function CheckoutPage() {
                     {deliveryCost === 0 ? 'Gratuit' : `${deliveryCost.toFixed(2)} €`}
                   </span>
                 </div>
-                <div className="flex justify-between text-lg font-semibold text-ava-700 pt-2 border-t border-gray-200">
+                <div className="flex justify-between text-lg font-semibold text-ava-800 pt-2 border-t border-gray-200">
                   <span>Total</span>
                   <span className="text-ava-gold">{total.toFixed(2)} €</span>
                 </div>

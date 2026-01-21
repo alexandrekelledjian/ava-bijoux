@@ -25,7 +25,7 @@ export default function CartPage() {
         <div className="w-24 h-24 mx-auto mb-6 bg-ava-100 rounded-full flex items-center justify-center">
           <ShoppingBag size={40} className="text-ava-400" />
         </div>
-        <h1 className="text-2xl font-serif font-semibold text-ava-700 mb-4">
+        <h1 className="text-2xl font-serif font-semibold text-ava-800 mb-4">
           Votre panier est vide
         </h1>
         <p className="text-gray-600 mb-8">
@@ -49,7 +49,7 @@ export default function CartPage() {
         Continuer mes achats
       </button>
 
-      <h1 className="text-3xl font-serif font-semibold text-ava-700 mb-8">
+      <h1 className="text-3xl font-serif font-semibold text-ava-800 mb-8">
         Mon panier ({cart.length} article{cart.length > 1 ? 's' : ''})
       </h1>
 
@@ -68,7 +68,7 @@ export default function CartPage() {
         {/* Order Summary */}
         <div className="lg:col-span-1">
           <div className="card p-6 sticky top-24">
-            <h2 className="font-semibold text-ava-700 text-lg mb-6">
+            <h2 className="font-semibold text-ava-800 text-lg mb-6">
               Récapitulatif
             </h2>
 
@@ -140,7 +140,7 @@ export default function CartPage() {
                     : `${deliveryCost.toFixed(2)} €`}
                 </span>
               </div>
-              <div className="flex justify-between text-lg font-semibold text-ava-700 pt-3 border-t border-gray-200">
+              <div className="flex justify-between text-lg font-semibold text-ava-800 pt-3 border-t border-gray-200">
                 <span>Total</span>
                 <span className="text-ava-gold">{total.toFixed(2)} €</span>
               </div>
@@ -149,7 +149,7 @@ export default function CartPage() {
             {/* Commission note */}
             {currentSalon && (
               <div className="mt-4 p-3 bg-ava-50 rounded-lg text-sm text-gray-600">
-                <span className="font-medium text-ava-700">✨ Commande via {currentSalon.name}</span>
+                <span className="font-medium text-ava-800">✨ Commande via {currentSalon.name}</span>
                 <p className="text-xs mt-1">30% de cette commande sera reversé à votre salon</p>
               </div>
             )}
@@ -195,7 +195,7 @@ function CartItem({ item, onRemove }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="font-semibold text-ava-700">{item.productName}</h3>
+            <h3 className="font-semibold text-ava-800">{item.productName}</h3>
             <div className="text-sm text-gray-500 mt-1 space-y-0.5">
               <p>
                 Gravure:{' '}

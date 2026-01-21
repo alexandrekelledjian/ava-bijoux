@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
 import { ArrowRight, Sparkles, Heart, Gift, Truck } from 'lucide-react'
 import { useStore } from '../../store/useStore'
+import { categories } from '../../data/products'
 // Étoile décorative (basée sur la charte graphique)
 function StarIcon({ className = 'w-4 h-4' }) {
   return (

@@ -220,12 +220,6 @@ export default function ProductsPage() {
     setDeleteConfirm(null)
   }
 
-  // Toggle product active status
-  const toggleProductStatus = (id) => {
-    setProducts(prev => prev.map(p =>
-      p.id === id ? { ...p, active: !p.active } : p
-    ))
-  }
 
   return (
     <div className="space-y-6">

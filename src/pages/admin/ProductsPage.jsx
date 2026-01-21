@@ -14,6 +14,7 @@ import {
   Gem,
   Star
 } from 'lucide-react'
+import { useStore } from '../../store/useStore'
 
 // Mock initial products data
 const initialProducts = [
@@ -77,7 +78,7 @@ const materials = [
 ]
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState(initialProducts)
+  const { products, addProduct, updateProduct, deleteProduct, toggleProductStatus } = useStore()
   const [searchTerm, setSearchTerm] = useState('')
   const [filterCategory, setFilterCategory] = useState('all')
   const [showModal, setShowModal] = useState(false)
